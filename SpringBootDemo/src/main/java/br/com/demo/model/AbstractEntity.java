@@ -10,6 +10,10 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class AbstractEntity implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8836409039816069807L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
