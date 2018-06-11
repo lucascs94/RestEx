@@ -1,5 +1,6 @@
 package br.com.demo.endpoint;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.demo.error.CustomErrorType;
+import br.com.demo.error.ResourceNotFoundException;
 import br.com.demo.model.Student;
 import br.com.demo.repository.StudentRepository;
 
@@ -36,28 +38,46 @@ public class StudentEndpoint {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<?> getStudentById(@PathVariable("id") Long id) {
+		verifyIfStudentExists(id);
 		Optional<Student> s = studentDAO.findById(id);
-		if (!s.isPresent()) {
-			return new ResponseEntity<>(new CustomErrorType("Student not found."), HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(s, HttpStatus.OK);
+	}
 
-		}
+	@GetMapping(value = "/findByName/{name}")
+	public ResponseEntity<?> getStudentByName(@PathVariable("name") String name) {
+		verifyIfStudentExists(name);
+		List<Student> s = studentDAO.findByNameIgnoreCaseContaining(name);
 		return new ResponseEntity<>(s, HttpStatus.OK);
 	}
 
 	@PostMapping
 	public ResponseEntity<?> save(@RequestBody Student student) {
-		return new ResponseEntity<>(studentDAO.save(student), HttpStatus.OK);
+		return new ResponseEntity<>(studentDAO.save(student), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
+		verifyIfStudentExists(id);
 		studentDAO.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody Student student) {
+		verifyIfStudentExists(student.getId());
 		studentDAO.save(student);
 		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	private void verifyIfStudentExists(Long id) {
+		if(studentDAO.findById(id).isPresent()) {
+			throw new ResourceNotFoundException("Student not found for id: " + id + ".");
+		}
+	}
+	
+	private void verifyIfStudentExists(String name) {
+		if(studentDAO.findByNameIgnoreCaseContaining(name).isEmpty()) {
+			throw new ResourceNotFoundException("Student(s) not found for name: " + name + ".");
+		}
 	}
 }
