@@ -2,8 +2,6 @@ package br.com.demo.error;
 
 import javax.annotation.Generated;
 
-import br.com.demo.error.ResourceNotFoundDetails.Builder;
-
 public class ValidationErrorDetails extends ErrorDetails{
 
 	private String field;
