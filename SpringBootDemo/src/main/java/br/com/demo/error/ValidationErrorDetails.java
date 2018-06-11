@@ -2,15 +2,39 @@ package br.com.demo.error;
 
 import javax.annotation.Generated;
 
-public class ResourceNotFoundDetails extends ErrorDetails{
+import br.com.demo.error.ResourceNotFoundDetails.Builder;
+
+public class ValidationErrorDetails extends ErrorDetails{
+
+	private String field;
+	private String fieldMessage;
+	
+	public String getField() {
+		return field;
+	}
+
+	public void setField(String field) {
+		this.field = field;
+	}
+
+	public String getFieldMessage() {
+		return fieldMessage;
+	}
+
+	public void setFieldMessage(String fieldMessage) {
+		this.fieldMessage = fieldMessage;
+	}
 
 	@Generated("SparkTools")
-	private ResourceNotFoundDetails(Builder builder) {
+	private ValidationErrorDetails(Builder builder) {
 		setTitle(builder.title);
 		setStatus(builder.status);
 		setDetail(builder.detail);
 		setTimestamp(builder.timestamp);
 		setDeveloperMessage(builder.developerMessage);
+		setField(builder.field);
+		setFieldMessage(builder.fieldMessage);
+		
 	}
 
 	/**
@@ -32,6 +56,8 @@ public class ResourceNotFoundDetails extends ErrorDetails{
 		private String detail;
 		private long timestamp;
 		private String developerMessage;
+		private String field;
+		private String fieldMessage;
 
 		private Builder() {
 		}
@@ -60,11 +86,19 @@ public class ResourceNotFoundDetails extends ErrorDetails{
 			this.developerMessage = developerMessage;
 			return this;
 		}
-
-		public ResourceNotFoundDetails build() {
-			return new ResourceNotFoundDetails(this);
+		
+		public Builder withField(String field) {
+			this.field = field;
+			return this;
 		}
-	}
+		
+		public Builder withFieldMessage(String fieldMessage) {
+			this.fieldMessage = fieldMessage;
+			return this;
+		}
 
-	
+		public ValidationErrorDetails build() {
+			return new ValidationErrorDetails(this);
+		}
+	}	
 }

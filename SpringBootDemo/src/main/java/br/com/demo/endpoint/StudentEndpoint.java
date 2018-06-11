@@ -3,6 +3,8 @@ package br.com.demo.endpoint;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,8 +54,8 @@ public class StudentEndpoint {
 	}
 
 	@PostMapping
-	@Transactional
-	public ResponseEntity<?> save(@RequestBody Student student) {
+	@Transactional(rollbackFor = Exception.class)
+	public ResponseEntity<?> save(@Valid @RequestBody Student student) {
 		return new ResponseEntity<>(studentDAO.save(student), HttpStatus.CREATED);
 	}
 
