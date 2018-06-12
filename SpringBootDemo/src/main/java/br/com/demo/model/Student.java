@@ -8,8 +8,9 @@ import javax.validation.constraints.NotEmpty;
 @Entity
 public class Student extends AbstractEntity {
 
-	@NotEmpty
+	@NotEmpty(message = "O campo nome é obrigatório")
 	private String name;
+	@NotEmpty
 	@Email
 	private String email;
 
