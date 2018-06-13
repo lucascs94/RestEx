@@ -22,7 +22,7 @@ public class SpringBootDemoAdapter implements WebMvcConfigurer {
 		
 		//não bombou
 		SortHandlerMethodArgumentResolver shmar = new SortHandlerMethodArgumentResolver();
-		shmar.setFallbackSort(new Sort(Direction.ASC, "name"));
+		shmar.setFallbackSort(Sort.by("name"));
 		argResolvers.add(shmar);
 	}
 
