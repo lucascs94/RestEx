@@ -26,7 +26,7 @@ import br.com.demo.model.Student;
 import br.com.demo.repository.StudentRepository;
 
 @RestController
-@RequestMapping("students")
+@RequestMapping("v1")
 public class StudentEndpoint {
 
 	private final StudentRepository studentDAO;
@@ -36,40 +36,40 @@ public class StudentEndpoint {
 		this.studentDAO = studentDAO;
 	}
 
-	@GetMapping
+	@GetMapping(path = "protected/students")
 	public ResponseEntity<?> listAll(Pageable pageable, Sort sort) {
 		return new ResponseEntity<>(studentDAO.findAll(pageable.getSortOr(sort)), HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/{id}")
+	@GetMapping(path = "protected/students/{id}")
 	public ResponseEntity<?> getStudentById(@PathVariable("id") Long id) {
 		verifyIfStudentExists(id);
 		Optional<Student> s = studentDAO.findById(id);
 		return new ResponseEntity<>(s, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/findByName/{name}")
+	@GetMapping(path = "protected/students/findByName/{name}")
 	public ResponseEntity<?> getStudentByName(@PathVariable("name") String name) {
 		verifyIfStudentExists(name);
 		List<Student> s = studentDAO.findByNameIgnoreCaseContaining(name);
 		return new ResponseEntity<>(s, HttpStatus.OK);
 	}
 
-	@PostMapping
+	@PostMapping(path = "admin/students")
 	@Transactional(rollbackFor = Exception.class)
 	public ResponseEntity<?> save(@Valid @RequestBody Student student) {
 		return new ResponseEntity<>(studentDAO.save(student), HttpStatus.CREATED);
 	}
 
-	@DeleteMapping(path = "/{id}")
-	@PreAuthorize("hasRole('ADMIN')")
+	@DeleteMapping(path = "admin/students/{id}")
+//	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> delete(@PathVariable("id") Long id) {
 		verifyIfStudentExists(id);
 		studentDAO.deleteById(id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PutMapping
+	@PutMapping(path = "admin/students")
 	public ResponseEntity<?> update(@RequestBody Student student) {
 		verifyIfStudentExists(student.getId());
 		studentDAO.save(student);
@@ -83,7 +83,7 @@ public class StudentEndpoint {
 	}
 	
 	private void verifyIfStudentExists(String name) {
-		if(!studentDAO.findByNameIgnoreCaseContaining(name).isEmpty()) {
+		if(studentDAO.findByNameIgnoreCaseContaining(name).isEmpty()) {
 			throw new ResourceNotFoundException("Student(s) not found for name: " + name + ".");
 		}
 	}
