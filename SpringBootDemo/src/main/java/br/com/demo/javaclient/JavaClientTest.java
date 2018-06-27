@@ -10,7 +10,7 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 public class JavaClientTest {
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		HttpURLConnection conn = null;
 		BufferedReader reader = null;
 		String user = "lucas";
@@ -35,7 +35,7 @@ public class JavaClientTest {
 				conn.disconnect();
 			}
 		}
-	}
+	}*/
 	
 	private static String encodeUsernamePassword(String username, String password) {
 		String userAndPass = username+":"+password;

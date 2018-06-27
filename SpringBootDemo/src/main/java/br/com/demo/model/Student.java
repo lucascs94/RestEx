@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
-
 @Entity
 public class Student extends AbstractEntity {
 
@@ -30,4 +29,8 @@ public class Student extends AbstractEntity {
 		this.email = email;
 	}
 
+	@Override
+	public String toString() {
+		return "Student [name=" + name + ", email=" + email + "]";
+	}
 }
