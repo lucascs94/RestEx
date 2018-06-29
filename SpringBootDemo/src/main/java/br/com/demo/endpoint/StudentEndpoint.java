@@ -38,7 +38,7 @@ public class StudentEndpoint {
 
 	@GetMapping(path = "protected/students")
 	public ResponseEntity<?> listAll(Pageable pageable, Sort sort) {
-		return new ResponseEntity<>(studentDAO.findAll(/*pageable.getSortOr(sort)*/), HttpStatus.OK);
+		return new ResponseEntity<>(studentDAO.findAll(pageable.getSortOr(sort)), HttpStatus.OK);
 	}
 
 	@GetMapping(path = "protected/students/{id}")

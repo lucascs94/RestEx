@@ -20,7 +20,6 @@ public class SpringBootDemoAdapter implements WebMvcConfigurer {
 		phmar.setFallbackPageable(PageRequest.of(0, 5));
 		argResolvers.add(phmar);
 		
-		//não bombou
 		SortHandlerMethodArgumentResolver shmar = new SortHandlerMethodArgumentResolver();
 		shmar.setFallbackSort(Sort.by("name"));
 		argResolvers.add(shmar);
