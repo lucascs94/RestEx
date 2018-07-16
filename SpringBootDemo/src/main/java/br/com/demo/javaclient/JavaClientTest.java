@@ -1,12 +1,7 @@
 package br.com.demo.javaclient;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Base64;
 
-import org.apache.tomcat.util.http.fileupload.IOUtils;
 
 public class JavaClientTest {
 

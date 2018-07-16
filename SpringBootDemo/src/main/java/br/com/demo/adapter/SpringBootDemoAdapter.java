@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.data.web.SortHandlerMethodArgumentResolver;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
